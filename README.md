@@ -1,6 +1,6 @@
 ![Node.js CI](https://github.com/bertolero/d3-project1/workflows/Node.js%20CI/badge.svg)
 
-# Finance Management List
+# Finance Management
  *Disclaimer* 
 
 Base code extracted from https://github.com/codingphasedotcom/Dev-Starter-Kit
