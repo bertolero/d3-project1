@@ -1,4 +1,5 @@
 ![Node.js CI](https://github.com/bertolero/d3-project1/workflows/Node.js%20CI/badge.svg)
+[![Build Status](https://bertol-pinheiro.visualstudio.com/TestProject/_apis/build/status/bertolero.d3-project1?branchName=master)](https://bertol-pinheiro.visualstudio.com/TestProject/_build/latest?definitionId=1&branchName=master)
 
 # Finance Management
  *Disclaimer* 
