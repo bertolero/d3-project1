@@ -64,6 +64,10 @@ module.exports = env => {
                     from: "**/*.min.js",
                     to: "js/",
                     context: "node_modules/d3-svg-legend"
+                }, {
+                    from: "**/index.js",
+                    to: "js/d3-tip.js",
+                    context: "node_modules/d3-tip/dist"
                 }]
             })
         ],
