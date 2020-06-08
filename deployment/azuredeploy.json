@@ -39,10 +39,7 @@
             }
           ]
         }
-      },
-      "dependsOn": [
-        "[concat('Microsoft.DocumentDB/databaseAccounts/', variables('comosdb_default_name'))]"
-      ]
+      }
     }
   ],
   "outputs": {
