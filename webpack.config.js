@@ -9,73 +9,77 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 
 module.exports = env => {
-  return {
-    entry: {
-      main: "./assets/js/components/polymer/app-polymer.js"
-    },
-    output: {
-      path: path.resolve(__dirname, "public"),
-      filename: "[name].js"
-    },
-    resolve: {
-      // see below for an explanation // '[name].[chunkhash].js' put this if you want to get hashed files to cache bust
-      //alias: { svelte: path.resolve("node_modules", "svelte") },
-      //extensions: [".mjs", ".js", ".svelte"],
-      //mainFields: ["svelte", "browser", "module", "main"]
-    },
-    module: {
-      rules: [
-        {
-          test: /\.js$/,
-          exclude: /node_modules/,
-          use: ["babel-loader", "prettier-loader"]
+    return {
+        entry: {
+            main: "./assets/js/components/polymer/app-polymer.js"
         },
-        {
-          test: /\.scss$/,
-          use: [
-            "style-loader",
-            MiniCssExtractPlugin.loader,
-            "css-loader",
-            "sass-loader",
-            "postcss-loader"
-          ]
+        output: {
+            path: path.resolve(__dirname, "public"),
+            filename: "[name].js"
+        },
+        resolve: {
+            // see below for an explanation // '[name].[chunkhash].js' put this if you want to get hashed files to cache bust
+            //alias: { svelte: path.resolve("node_modules", "svelte") },
+            //extensions: [".mjs", ".js", ".svelte"],
+            //mainFields: ["svelte", "browser", "module", "main"]
+        },
+        module: {
+            rules: [
+                {
+                    test: /\.js$/,
+                    exclude: /node_modules/,
+                    use: ["babel-loader", "prettier-loader"]
+                },
+                {
+                    test: /\.scss$/,
+                    use: [
+                        "style-loader",
+                        MiniCssExtractPlugin.loader,
+                        "css-loader",
+                        "sass-loader",
+                        "postcss-loader"
+                    ]
+                }
+            ]
+        },
+        plugins: [
+            new MiniCssExtractPlugin({
+                filename: "styles.css" // 'style.[contenthash].css' put this if you want to get hashed files to cache bust
+            }),
+            new HtmlWebpackPlugin({
+                hash: true,
+                template: "./assets/views/polymer/index.html"
+            }),
+            new WebpackMd5Hash(),
+            new CopyWebpackPlugin({
+                patterns: [{
+                    from: "**/*min.js",
+                    to: "js/",
+                    context: "node_modules/materialize-css/dist/js"
+                }, {
+                    from: "**/*.min.js",
+                    to: "js/",
+                    context: "node_modules/d3/dist"
+                }]
+            })
+        ],
+        optimization: {
+            splitChunks: {chunks: "all", minSize: 0},
+            minimize: true,
+            minimizer: [
+                new TerserPlugin({
+                    terserOptions: {
+                        compress: {},
+                        warning: true,
+                        mangle: false,
+                        output: {
+                            beautify: env.NODE_ENV !== "production" ? true : false
+                        }
+                    }
+                })
+            ],
+            usedExports: true,
+            sideEffects: true
         }
-      ]
-    },
-    plugins: [
-      new MiniCssExtractPlugin({
-        filename: "styles.css" // 'style.[contenthash].css' put this if you want to get hashed files to cache bust
-      }),
-      new HtmlWebpackPlugin({
-        hash: true,
-        template: "./assets/views/polymer/index.html"
-      }),
-      new WebpackMd5Hash(),
-      new CopyWebpackPlugin({
-        patterns: [{
-          from: "**/*.js",
-          to: "js/materialize",
-          context: "node_modules/materialize-css/js"
-        }]
-      })
-    ],
-    optimization: {
-      splitChunks: { chunks: "all", minSize: 0 },
-      minimize: true,
-      minimizer: [
-        new TerserPlugin({
-          terserOptions: {
-            compress: {},
-            warning: true,
-            mangle: false,
-            output: {
-              beautify: env.NODE_ENV !== "production" ? true : false
-            }
-          }
-        })
-      ],
-      usedExports: true,
-      sideEffects: true
-    }
-  };
+    };
 };
