@@ -50,26 +50,7 @@ module.exports = env => {
                 hash: true,
                 template: "./assets/views/polymer/index.html"
             }),
-            new WebpackMd5Hash(),
-            new CopyWebpackPlugin({
-                patterns: [{
-                    from: "**/*min.js",
-                    to: "js/",
-                    context: "node_modules/materialize-css/dist/js"
-                }, {
-                    from: "**/*.min.js",
-                    to: "js/",
-                    context: "node_modules/d3/dist"
-                }, {
-                    from: "**/*.min.js",
-                    to: "js/",
-                    context: "node_modules/d3-svg-legend"
-                }, {
-                    from: "**/index.js",
-                    to: "js/d3-tip.js",
-                    context: "node_modules/d3-tip/dist"
-                }]
-            })
+            new WebpackMd5Hash()
         ],
         optimization: {
             splitChunks: {chunks: "all", minSize: 0},

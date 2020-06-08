@@ -1,3 +1,5 @@
+import db from "./firebase-utils";
+
 const form = document.querySelector("form");
 const name = document.querySelector("#name");
 const cost = document.querySelector("#cost");
